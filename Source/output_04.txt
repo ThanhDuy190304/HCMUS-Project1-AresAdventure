@@ -1,3 +1,3 @@
 Breadth-First Search
-Steps: 22, Weight: 80, Node: 11251, Time (ms): 0.86, Memory (MB): -336.00
+Steps: 22, Weight: 80, Node: 11251, Time (ms): 1.28, Memory (MB): -944.00
 ['u', 'l', 'u', 'R', 'R', 'd', 'R', 'R', 'd', 'r', 'U', 'd', 'u', 'r', 'r', 'd', 'L', 'L', 'r', 'd', 'L', 'L']
