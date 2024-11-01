@@ -1,0 +1,3 @@
+Breadth-First Search
+Steps: 31, Weight: 78, Node: 601435, Time (ms): 46.42, Memory (MB): 1110744.00
+['l', 'd', 'R', 'R', 'R', 'R', 'u', 'r', 'r', 'd', 'L', 'r', 'd', 'L', 'L', 'L', 'L', 'u', 'r', 'R', 'u', 'u', 'u', 'r', 'r', 'd', 'L', 'L', 'u', 'L', 'L']

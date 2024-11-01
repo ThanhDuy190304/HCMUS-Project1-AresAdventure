@@ -88,7 +88,7 @@ def animate_movement_with_push(game: Sokoban, path):
         if (player_x, player_y) in goal_positions:
             canvas.create_image(x0 + grid_size // 2, y0 + grid_size // 2, image=goal_img)
         else:
-            canvas.create_rectangle(x0, y0, x1, y1, fill="gray")
+            canvas.create_image(x0 + grid_size // 2, y0 + grid_size // 2, image=ground_img)
 
         next_player_x, next_player_y = get_next_position(player_x, player_y, move)
 
@@ -105,23 +105,22 @@ def animate_movement_with_push(game: Sokoban, path):
                     canvas.create_image((current_box_pos[1] * grid_size) + start_x + grid_size // 2,
                                         (current_box_pos[0] * grid_size) + start_y + grid_size // 2, image=goal_img)
                 else:
-                    canvas.create_rectangle((current_box_pos[1] * grid_size) + start_x,
-                                            (current_box_pos[0] * grid_size) + start_y,
-                                            (current_box_pos[1] + 1) * grid_size + start_x,
-                                            (current_box_pos[0] + 1) * grid_size + start_y, fill="gray")
+                    canvas.create_image((current_box_pos[1] * grid_size) + start_x + grid_size // 2,
+                                        (current_box_pos[0] * grid_size) + start_y + grid_size // 2, image=ground_img)
 
                 if (next_box_x, next_box_y) in goal_positions:
                     canvas.create_image((next_box_y * grid_size) + start_x + grid_size // 2,
-                                        (next_box_x * grid_size) + start_y + grid_size // 2, image=goal_img)
-                canvas.create_image((next_box_y * grid_size) + start_x + grid_size // 2,
-                                    (next_box_x * grid_size) + start_y + grid_size // 2, image=box_img, tags="stone")
+                                        (next_box_x * grid_size) + start_y + grid_size // 2, image=stone_on_goal_img)
+                else:
+                    canvas.create_image((next_box_y * grid_size) + start_x + grid_size // 2,
+                                        (next_box_x * grid_size) + start_y + grid_size // 2, image=box_img, tags="stone")
 
                 canvas.create_text(
                     (next_box_y * grid_size) + start_x + grid_size // 2,
                     (next_box_x * grid_size) + start_y + grid_size // 2,
                     text=str(stone_weight),
-                    font=("Arial", 12, "bold"),
-                    fill="black"
+                    font=("Arial", 14, "bold"),
+                    fill="brown"
                 )
 
         player_x, player_y = next_player_x, next_player_y
@@ -207,23 +206,20 @@ def display_map(grid, stones_map):
                 canvas.create_image(x_center, y_center, image=goal_img)
             elif char == '+':
                 canvas.create_image(x_center, y_center, image=player_on_goal_img)
+            elif char == '*':
+                canvas.create_image(x_center, y_center, image=stone_on_goal_img)
             else:
-                canvas.create_rectangle(
-                    start_x + j * grid_size, 
-                    start_y + i * grid_size, 
-                    start_x + (j + 1) * grid_size, 
-                    start_y + (i + 1) * grid_size, 
-                    fill="gray"
-                )
+                canvas.create_image(x_center, y_center, image=ground_img)
 
-    for (stone_x, stone_y), weight in stones_map.items():
-        canvas.create_text(
-            start_x + stone_y * grid_size + grid_size // 2,
-            start_y + stone_x * grid_size + grid_size // 2,
-            text=str(weight),
-            font=("Arial", 12, "bold"),
-            fill="black"
-        )
+
+        for (stone_x, stone_y), weight in stones_map.items():
+            canvas.create_text(
+                start_x + stone_y * grid_size + grid_size // 2,
+                start_y + stone_x * grid_size + grid_size // 2,
+                text=str(weight),
+                font=("Arial", 14, "bold"),
+                fill="brown"
+            )
 
 def change_level(direction):
     global current_level
@@ -266,6 +262,10 @@ wall_img = tk.PhotoImage(file="anh4.png")
 original_img = Image.open("anh5.png")  
 run_img = ImageTk.PhotoImage(original_img)
 player_on_goal_img = tk.PhotoImage(file="anh7.png")
+
+
+stone_on_goal_img = ImageTk.PhotoImage(file="anh8.png")
+ground_img = tk.PhotoImage(file="anh9.png")
 
 title_font = font.Font(family="Helvetica", size=20, weight="bold")
 subtitle_font = font.Font(family="Helvetica", size=10)
