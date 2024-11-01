@@ -4,18 +4,20 @@ from code.game import Sokoban
 import code.bfs as bfs
 import code.astar as astar
 import code.ucs as ucs
+import code.dfs as dfs
 
 
 def main():
     
-    grid, stones, stone_weights, switches, player_position = read_maze_file('input_01.txt')
+    grid, stones, stone_weights, switches, player_position = read_maze_file('input/input_10.txt')
     check_points = find_list_check_point(grid)
     boxes_data = find_boxes_position(grid, stone_weights)
 
     game = Sokoban(grid, check_points, boxes_data)
     
-    result = bfs.BFS(game)
-    # result = astar.AStar(game)
+    #result = bfs.BFS(game)
+    # result = dfs.DFS(game)
+    result = astar.AStar(game)
     # result = ucs.UCS(game)
     
     if result:
