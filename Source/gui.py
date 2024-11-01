@@ -236,75 +236,84 @@ def switch_algorithm(event):
     current_algorithm_index = (current_algorithm_index + 1) % len(algorithms)
     algorithm_label.config(text=algorithms[current_algorithm_index])
 
-root = tk.Tk()
-root.title("ARES'S ADVENTURE")
-root.geometry("800x720+0+0")
-root.configure(bg="black")
+def map_init():
+    global root, current_level, algorithms, current_algorithm_index, canvas, result_window
+    current_level = 1
+    algorithms = ["Breadth-First Search", "Depth-First Search", "Uniform Cost Search", "A* Search with heuristic"]
+    current_algorithm_index = 0
 
-result_window = tk.Toplevel(root)
-result_window.title("RESULT")
-result_window.geometry("400x200+820+300")
-result_window.configure(bg="black")
-result_window.lift()
-result_window.attributes("-topmost", True)
+    root = tk.Tk()
+    root.title("ARES'S ADVENTURE")
+    root.geometry("800x720+0+0")
+    root.configure(bg="black")
 
-background_img = Image.open("anh6.webp")  
-background_img = background_img.resize((800, 720), Image.LANCZOS)  
-bg_image = ImageTk.PhotoImage(background_img)
+    result_window = tk.Toplevel(root)
+    result_window.title("RESULT")
+    result_window.geometry("400x200+820+300")
+    result_window.configure(bg="black")
+    result_window.lift()
+    result_window.attributes("-topmost", True)
 
-background_label = tk.Label(root, image=bg_image)
-background_label.place(relwidth=1, relheight=1)
+    # Load images
+    global player_img, box_img, goal_img, wall_img, original_img, run_img, player_on_goal_img, stone_on_goal_img, ground_img, bg_image
+    background_img = Image.open("anh6.webp")
+    background_img = background_img.resize((800, 720), Image.LANCZOS)
+    bg_image = ImageTk.PhotoImage(background_img)
 
-player_img = tk.PhotoImage(file="anh1.png")
-box_img = tk.PhotoImage(file="anh2.png")
-goal_img = tk.PhotoImage(file="anh3.png")
-wall_img = tk.PhotoImage(file="anh4.png")
-original_img = Image.open("anh5.png")  
-run_img = ImageTk.PhotoImage(original_img)
-player_on_goal_img = tk.PhotoImage(file="anh7.png")
+    player_img = tk.PhotoImage(file="anh1.png")
+    box_img = tk.PhotoImage(file="anh2.png")
+    goal_img = tk.PhotoImage(file="anh3.png")
+    wall_img = tk.PhotoImage(file="anh4.png")
+    original_img = Image.open("anh5.png")
+    run_img = ImageTk.PhotoImage(original_img)
+    player_on_goal_img = tk.PhotoImage(file="anh7.png")
+    stone_on_goal_img = ImageTk.PhotoImage(file="anh8.png")
+    ground_img = tk.PhotoImage(file="anh9.png")
 
+    # Configure widgets
+    background_label = tk.Label(root, image=bg_image)
+    background_label.place(relwidth=1, relheight=1)
 
-stone_on_goal_img = ImageTk.PhotoImage(file="anh8.png")
-ground_img = tk.PhotoImage(file="anh9.png")
+    title_font = font.Font(family="Helvetica", size=20, weight="bold")
+    subtitle_font = font.Font(family="Helvetica", size=10)
 
-title_font = font.Font(family="Helvetica", size=20, weight="bold")
-subtitle_font = font.Font(family="Helvetica", size=10)
+    title_label = tk.Label(root, text="ARES'S ADVENTURE", font=title_font, fg="white", bg="black")
+    title_label.pack(pady=5)
 
-title_label = tk.Label(root, text="ARES'S ADVENTURE", font=title_font, fg="white", bg="black")
-title_label.pack(pady=5)
+    subtitle_label = tk.Label(root, text="Now, select your map!!!", font=subtitle_font, fg="white", bg="black")
+    subtitle_label.pack(pady=5)
 
-subtitle_label = tk.Label(root, text="Now, select your map!!!", font=subtitle_font, fg="white", bg="black")
-subtitle_label.pack(pady=5)
+    level_frame = tk.Frame(root, bg="black")
+    level_frame.pack(pady=10)
+    prev_button = tk.Button(level_frame, text="<", font=subtitle_font, command=lambda: change_level("Left"))
+    prev_button.grid(row=0, column=0)
+    global level_label
+    level_label = tk.Label(level_frame, text=f"Lv.{current_level}", font=title_font, fg="white", bg="black")
+    level_label.grid(row=0, column=1, padx=5)
+    next_button = tk.Button(level_frame, text=">", font=subtitle_font, command=lambda: change_level("Right"))
+    next_button.grid(row=0, column=2)
 
-level_frame = tk.Frame(root, bg="black")
-level_frame.pack(pady=10)
-prev_button = tk.Button(level_frame, text="<", font=subtitle_font, command=lambda: change_level("Left"))
-prev_button.grid(row=0, column=0)
-level_label = tk.Label(level_frame, text=f"Lv.{current_level}", font=title_font, fg="white", bg="black")
-level_label.grid(row=0, column=1, padx=5)
-next_button = tk.Button(level_frame, text=">", font=subtitle_font, command=lambda: change_level("Right"))
-next_button.grid(row=0, column=2)
+    algorithm_frame = tk.LabelFrame(root, text="Selected Algorithm", font=("Helvetica", 14, "bold"), fg="white", bg="black", bd=4, labelanchor="n")
+    algorithm_frame.pack(pady=10)
 
-algorithm_frame = tk.LabelFrame(root, text="Selected Algorithm", font=("Helvetica", 14, "bold"), fg="white", bg="black", bd=4, labelanchor="n")
-algorithm_frame.pack(pady=10)
+    global algorithm_label
+    algorithm_label = tk.Label(algorithm_frame, text=algorithms[current_algorithm_index], font=("Helvetica", 16, "bold"), fg="white", bg="black")
+    algorithm_label.pack(padx=5, pady=5)
 
-algorithm_label = tk.Label(algorithm_frame, text=algorithms[current_algorithm_index], font=("Helvetica", 16, "bold"), fg="white", bg="black")
-algorithm_label.pack(padx=5, pady=5)
+    run_button = tk.Button(root, image=run_img, command=start_algorithm)
+    run_button.pack(pady=10)
 
-run_button = tk.Button(root, image=run_img, command=start_algorithm)
-run_button.pack(pady=10)
+    canvas = tk.Canvas(root, width=400, height=350, bg="grey")
+    canvas.pack(pady=10)
+    canvas.create_image(0, 0, image=bg_image, anchor='nw')
 
-canvas = tk.Canvas(root, width=400, height=350, bg="grey")
-canvas.pack(pady=10)
-canvas.create_image(0, 0, image=bg_image , anchor='nw')
+    result_label = tk.Label(root, text="", font=("Helvetica", 12), fg="white", bg="black", justify="left")
+    result_label.pack(pady=10)
 
-result_label = tk.Label(root, text="", font=("Helvetica", 12), fg="white", bg="black", justify="left")
-result_label.pack(pady=10)
+    root.bind("<Right>", lambda event: change_level("Right"))
+    root.bind("<Left>", lambda event: change_level("Left"))
+    root.bind("<space>", switch_algorithm)
 
-root.bind("<Right>", lambda event: change_level("Right"))
-root.bind("<Left>", lambda event: change_level("Left"))
-root.bind("<space>", switch_algorithm)
+    load_level(current_level)
 
-load_level(current_level)
-
-root.mainloop()
+    root.mainloop()
