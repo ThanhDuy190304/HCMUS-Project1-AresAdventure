@@ -11,15 +11,20 @@ from PIL import Image, ImageTk
 current_level = 1
 algorithms = ["Breadth-First Search", "Depth-First Search", "Uniform Cost Search", "A* Search with heuristic"]
 current_algorithm_index = 0
+is_algorithm_running = False
 def save_result_to_file(output_file, result, algorithm_name):
     num_checked_states, final_node, total_time, memory_usage = result
     with open(output_file, "w") as f:
         f.write(f"{algorithm_name}\n")
-        f.write(f"Steps: {len(final_node.actions)}, Weight: {final_node.total_weight}, Node: {num_checked_states}, Time (ms): {total_time:.2f}, Memory (MB): {memory_usage:.2f}\n")
+        f.write(f"Steps: {len(final_node.actions)}, Weight: {final_node.total_weight}, Node: {num_checked_states}, Time (ms): {total_time:.2f}, Memory (KB): {memory_usage:.2f}\n")
         f.write(f"{final_node.actions}")
     
 def run_algorithm(game, result_path, algorithm_name,result_window):
-    
+
+    global is_algorithm_running
+    is_algorithm_running = True
+    run_button.config(state=tk.DISABLED)
+
     if result_window is None or not result_window.winfo_exists():
         
         result_window = tk.Toplevel(root)
@@ -46,7 +51,7 @@ def run_algorithm(game, result_path, algorithm_name,result_window):
             f"Total weight: {final_node.total_weight}\n"
             f"Steps: {len(final_node.actions)}\n"
             f"Time: {total_time*1000:.2f} ms\n"
-            f"Memory: {memory_usage / (1024 ** 2):.2f} MB\n"
+            f"Memory: {memory_usage:.2f} KB\n"
             f"Node generated: {num_checked_states}"
         )
 
@@ -58,6 +63,14 @@ def run_algorithm(game, result_path, algorithm_name,result_window):
         result_label.pack(pady=10, padx=20)
         save_result_to_file(result_path, result, algorithm_name)
         animate_movement_with_push(game, final_node.actions)
+        root.after(int(total_time * 1000) + 1000, lambda: run_button.config(state=tk.NORMAL))
+    else:
+        is_algorithm_running = False
+        run_button.config(state=tk.NORMAL)
+        status_label.config(text="Process has no result",font="bold", fg="purple")
+        return
+    is_algorithm_running = False
+    status_label.config(text="Process completed", font="bold", fg="green")
         
 
 def animate_movement_with_push(game: Sokoban, path):
@@ -85,8 +98,12 @@ def animate_movement_with_push(game: Sokoban, path):
         return x, y
 
     def perform_step():
+        global is_algorithm_running
         nonlocal player_x, player_y, step_index, stones_map
         if step_index >= len(shortest_path):
+            is_algorithm_running = False
+            run_button.config(state=tk.NORMAL)
+            status_label.config(text="Process completed",font="bold", fg="green")
             return
 
         move = shortest_path[step_index]
@@ -140,8 +157,14 @@ def animate_movement_with_push(game: Sokoban, path):
     perform_step()
 
 def start_algorithm():
+    global is_algorithm_running
+    is_algorithm_running = True
+    run_button.config(state=tk.DISABLED)
+    if is_algorithm_running:
+        status_label.config(text="Process is running",font="bold", fg="red")
+        
     load_level(current_level)
-    root.after(1000,load_and_run_algorithm())
+    root.after(1000, load_and_run_algorithm)
 
 def load_and_run_algorithm():
     global current_level
@@ -178,7 +201,7 @@ def load_level(level):
         for i, line in enumerate(fi):
             row = list(line.strip())
             for j, char in enumerate(row):
-                if char == '$':
+                if char == '$' or char =='*':
                     stones_map[(i, j)] = stone_weights[stone_index]
                     stone_index += 1
             grid.append(row)
@@ -199,16 +222,17 @@ def display_map(grid, stones_map):
     start_x = (canvas.winfo_width() - map_width) // 2
     start_y = (canvas.winfo_height() - map_height) // 2
 
+    goal_positions = set((i, j) for i, row in enumerate(grid) for j, val in enumerate(row) if val in ['.', '*', '+'])
+
     for i, row in enumerate(grid):
         for j, char in enumerate(row):
             x_center = start_x + j * grid_size + grid_size // 2
             y_center = start_y + i * grid_size + grid_size // 2
+
             if char == '#':
                 canvas.create_image(x_center, y_center, image=wall_img)
             elif char == '@':
                 canvas.create_image(x_center, y_center, image=player_img, tags="player")
-            elif char == '$':
-                canvas.create_image(x_center, y_center, image=box_img, tags="stone")
             elif char == '.':
                 canvas.create_image(x_center, y_center, image=goal_img)
             elif char == '+':
@@ -218,15 +242,22 @@ def display_map(grid, stones_map):
             else:
                 canvas.create_image(x_center, y_center, image=ground_img)
 
+    for (stone_x, stone_y), weight in stones_map.items():
+        x_center = start_x + stone_y * grid_size + grid_size // 2
+        y_center = start_y + stone_x * grid_size + grid_size // 2
 
-        for (stone_x, stone_y), weight in stones_map.items():
-            canvas.create_text(
-                start_x + stone_y * grid_size + grid_size // 2,
-                start_y + stone_x * grid_size + grid_size // 2,
-                text=str(weight),
-                font=("Arial", 14, "bold"),
-                fill="brown"
-            )
+        if (stone_x, stone_y) in goal_positions:
+            canvas.create_image(x_center, y_center, image=stone_on_goal_img)
+        else:
+            canvas.create_image(x_center, y_center, image=box_img, tags="stone")
+
+        canvas.create_text(
+            x_center,
+            y_center,
+            text=str(weight),
+            font=("Arial", 14, "bold"),
+            fill="brown"
+        )
 
 def change_level(direction):
     global current_level
@@ -237,6 +268,7 @@ def change_level(direction):
     canvas.delete("all")
     background_img_id = canvas.create_image(0, 0, image=bg_image, anchor='nw')
     load_level(current_level)
+    status_label.config(text="")
 
 def switch_algorithm(event):
     global current_algorithm_index
@@ -253,6 +285,9 @@ def map_init():
     root.title("ARES'S ADVENTURE")
     root.geometry("800x720+0+0")
     root.configure(bg="black")
+
+    global result_window
+    result_window = None
 
     result_window = tk.Toplevel(root)
     result_window.title("RESULT")
@@ -307,6 +342,11 @@ def map_init():
     algorithm_label = tk.Label(algorithm_frame, text=algorithms[current_algorithm_index], font=("Helvetica", 16, "bold"), fg="white", bg="black")
     algorithm_label.pack(padx=5, pady=5)
 
+    global status_label
+    status_label = tk.Label(root, text="", font=("Helvetica", 12), fg="white", bg="black", justify="left")
+    status_label.pack(pady=10)
+
+    global run_button
     run_button = tk.Button(root, image=run_img, command=start_algorithm)
     run_button.pack(pady=10)
 

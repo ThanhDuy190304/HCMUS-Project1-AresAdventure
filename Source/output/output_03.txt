@@ -1,3 +1,3 @@
-Breadth-First Search
-Steps: 23, Weight: 44, Node: 1081, Time (ms): 0.53, Memory (MB): 1416.00
+Uniform Cost Search
+Steps: 23, Weight: 44, Node: 1246, Time (ms): 0.32, Memory (KB): 648.00
 ['r', 'r', 'D', 'u', 'l', 'l', 'd', 'R', 'R', 'u', 'r', 'D', 'r', 'd', 'd', 'l', 'l', 'U', 'R', 'u', 'u', 'l', 'D']
