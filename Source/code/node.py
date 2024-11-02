@@ -15,16 +15,9 @@ class Node:
 	def __eq__(self, other):
 		if self.state.stone_map != other.state.stone_map:
 			return False	
-		
 		if self.state.playerPos == other.state.playerPos:
 			return True
-		
-		for stone_position in self.state.stone_map.keys():
-			if is_adjacent(self.state.playerPos, stone_position) and\
-				is_adjacent(other.state.playerPos, stone_position):
-				return True
 
-		return False
 	
 	''' RECURSIVE FUNCTION TO BACKTRACK TO THE FIRST IF THE CURRENT STATE IS GOAL '''
 	def get_line(self):

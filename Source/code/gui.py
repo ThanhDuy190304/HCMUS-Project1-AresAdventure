@@ -20,7 +20,6 @@ def save_result_to_file(output_file, result, algorithm_name):
     
 def run_algorithm(game, result_path, algorithm_name,result_window):
     
-    
     if result_window is None or not result_window.winfo_exists():
         
         result_window = tk.Toplevel(root)
@@ -47,7 +46,7 @@ def run_algorithm(game, result_path, algorithm_name,result_window):
             f"Total weight: {final_node.total_weight}\n"
             f"Steps: {len(final_node.actions)}\n"
             f"Time: {total_time*1000:.2f} ms\n"
-            f"Memory: {memory_usage//1024:.2f} MB\n"
+            f"Memory: {memory_usage / (1024 ** 2):.2f} MB\n"
             f"Node generated: {num_checked_states}"
         )
 
