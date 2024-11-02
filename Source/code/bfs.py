@@ -7,7 +7,7 @@ from queue import *
 
 def BFS(Sokoban: Sokoban):
 	start_time = time.time()
-	initial_memory = get_memory_usage()
+	initial_memory = process_memory()
 
 
 	startNode = Node(Sokoban, None, [], 0)
@@ -31,9 +31,11 @@ def BFS(Sokoban: Sokoban):
 			
 			if new_node in explored_set:
 				continue
-
+			if(new_node.state.is_least_one_box_in_corner() or new_node.state.is_stuck_all_stones()):
+				explored_set.add(new_node)
+				continue
 			if new_node.state.check_win():
-				final_memory = get_memory_usage()
+				final_memory = process_memory()
 				end_time = time.time()		 
 				
 				return (len(explored_set), new_node, end_time - start_time, final_memory - initial_memory)
@@ -44,7 +46,5 @@ def BFS(Sokoban: Sokoban):
 			end_time = time.time()
 
 			if end_time - start_time > TIME_OUT:
-				final_memory = get_memory_usage()
 				return []
-	final_memory = get_memory_usage()
 	return []

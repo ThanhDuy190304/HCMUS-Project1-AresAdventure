@@ -1,3 +1,3 @@
 Uniform Cost Search
-Steps: 45, Weight: 383, Node: 1496, Time (ms): 0.37, Memory (KB): 2000.00
+Steps: 45, Weight: 383, Node: 4962, Time (ms): 0.49, Memory (KB): 0.00
 ['U', 'L', 'u', 'l', 'l', 'l', 'd', 'd', 'r', 'r', 'U', 'r', 'u', 'u', 'r', 'D', 'r', 'D', 'L', 'L', 'u', 'u', 'l', 'l', 'd', 'R', 'R', 'l', 'l', 'l', 'd', 'd', 'r', 'r', 'U', 'r', 'u', 'L', 'r', 'd', 'r', 'r', 'u', 'L', 'L']

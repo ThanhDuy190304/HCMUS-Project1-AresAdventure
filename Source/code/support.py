@@ -1,15 +1,13 @@
 import os
+import psutil
 TIME_OUT = 1800
 
 
-def get_memory_usage():
-    process = os.popen('wmic process where "ProcessId={}" get WorkingSetSize'.format(os.getpid()))
-    memory = process.read().strip().split('\n')
-    
-    for line in memory:
-        if line.strip().isdigit():
-            return int(line.strip()) // 1024  
-    return 0
+# inner psutil function
+def process_memory():
+    process = psutil.Process(os.getpid())
+    mem_info = process.memory_info()
+    return mem_info.rss
 
 def read_maze_file(file_path):
     with open(file_path, 'r') as file:

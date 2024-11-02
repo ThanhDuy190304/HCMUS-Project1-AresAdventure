@@ -6,7 +6,7 @@ from .game import Sokoban
 
 def UCS(Sokoban:Sokoban):
 	start_time = time.time()
-	initial_memory = get_memory_usage()
+	initial_memory = process_memory()
 	startNode = Node(Sokoban, None, [], 0)
 
 	explored_set = set()
@@ -19,12 +19,16 @@ def UCS(Sokoban:Sokoban):
 
 		if current_node.state.check_win():
 			end_time = time.time()
-			final_memory = get_memory_usage()
+			final_memory = process_memory()
 			return (len(explored_set), current_node, end_time - start_time, final_memory - initial_memory)
 
 		if current_node in explored_set:
 			continue
 
+		if(current_node.state.is_least_one_box_in_corner() or current_node.state.is_stuck_all_stones()):
+			explored_set.add(current_node)
+			continue	
+		
 		explored_set.add(current_node)
 
 		valid_actions_list = current_node.state.get_next_actions()

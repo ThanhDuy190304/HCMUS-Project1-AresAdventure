@@ -1,3 +1,3 @@
-A* Search with heuristic
-Steps: 35, Weight: 60, Node: 462, Time (ms): 0.26, Memory (KB): 36.00
-['d', 'r', 'r', 'd', 'r', 'r', 'u', 'L', 'd', 'd', 'l', 'l', 'l', 'u', 'u', 'u', 'r', 'r', 'u', 'r', 'D', 'D', 'r', 'd', 'd', 'l', 'l', 'u', 'U', 'd', 'u', 'r', 'r', 'd', 'L']
+Depth-First Search
+Steps: 127, Weight: 190, Node: 3084, Time (ms): 0.26, Memory (MB): 4128768.00
+['r', 'r', 'd', 'd', 'r', 'r', 'u', 'L', 'r', 'd', 'd', 'l', 'l', 'l', 'l', 'u', 'u', 'r', 'u', 'r', 'u', 'r', 'D', 'l', 'l', 'l', 'd', 'd', 'd', 'r', 'r', 'u', 'U', 'd', 'r', 'r', 'u', 'L', 'r', 'd', 'd', 'l', 'l', 'l', 'l', 'u', 'u', 'r', 'u', 'R', 'l', 'l', 'd', 'd', 'd', 'r', 'r', 'r', 'r', 'u', 'u', 'l', 'L', 'r', 'l', 'u', 'u', 'r', 'D', 'l', 'l', 'l', 'd', 'R', 'l', 'd', 'd', 'r', 'r', 'u', 'U', 'd', 'r', 'r', 'u', 'L', 'u', 'L', 'r', 'd', 'r', 'd', 'd', 'l', 'l', 'l', 'l', 'u', 'u', 'r', 'R', 'u', 'r', 'D', 'r', 'd', 'd', 'l', 'l', 'l', 'l', 'u', 'u', 'r', 'l', 'u', 'R', 'l', 'd', 'd', 'd', 'r', 'r', 'r', 'r', 'u', 'L']

@@ -216,9 +216,6 @@ class Sokoban:
         return categorized_actions
 
     def get_next_actions(self):
-
-        if(self.is_least_one_box_in_corner() or self.is_stuck_all_stones()):
-            return []
         
         '''Return list of positions that player can move to from current position'''
         x, y = self.playerPos
