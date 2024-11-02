@@ -9,6 +9,7 @@ def BFS(Sokoban: Sokoban):
 	start_time = time.time()
 	initial_memory = get_memory_usage()
 
+
 	startNode = Node(Sokoban, None, [], 0)
 
 	explored_set = set()
@@ -16,6 +17,7 @@ def BFS(Sokoban: Sokoban):
 	frontier = Queue()
 	frontier.put(startNode)
 
+	
 	while frontier.empty() is False:
 
 		expand_node = frontier.get()
@@ -31,14 +33,18 @@ def BFS(Sokoban: Sokoban):
 				continue
 
 			if new_node.state.check_win():
-				end_time = time.time()
 				final_memory = get_memory_usage()
+				end_time = time.time()		 
+				
 				return (len(explored_set), new_node, end_time - start_time, final_memory - initial_memory)
 			
 			explored_set.add(new_node)
 			frontier.put(new_node)
 			
 			end_time = time.time()
+
 			if end_time - start_time > TIME_OUT:
+				final_memory = get_memory_usage()
 				return []
+	final_memory = get_memory_usage()
 	return []

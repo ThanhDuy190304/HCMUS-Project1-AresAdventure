@@ -1,4 +1,3 @@
-
 from copy import deepcopy
 
 class Sokoban:
@@ -391,7 +390,3 @@ class Sokoban:
                 new_board[p[0]][p[1]] = self.SWITCH_SYMBOL
 
         return Sokoban(new_board, self.check_point_list, new_stone_map), actions, weight
-
-
-
-

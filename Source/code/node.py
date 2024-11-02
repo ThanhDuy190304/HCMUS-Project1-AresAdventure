@@ -42,4 +42,3 @@ class Node:
 			actions.append(next_action)
 		
 		return actions
-	   

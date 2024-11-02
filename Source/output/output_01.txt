@@ -1,0 +1,3 @@
+A* Search with heuristic
+Steps: 25, Weight: 405, Node: 27306, Time (ms): 3.21, Memory (MB): 2732.00
+['u', 'u', 'l', 'D', 'l', 'd', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'u', 'l', 'l', 'l', 'l', 'L', 'L', 'L', 'u', 'l', 'D']

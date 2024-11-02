@@ -1,13 +1,5 @@
-TIME_OUT = 1800
 import os
-def is_adjacent(pos1, pos2):
-    '''Check if pos1 is adjacent to pos2 (up, down, left, right).'''
-    return (
-        (pos1[0] == pos2[0] + 1 and pos1[1] == pos2[1]) or  # Below
-        (pos1[0] == pos2[0] - 1 and pos1[1] == pos2[1]) or  # Above
-        (pos1[0] == pos2[0] and pos1[1] == pos2[1] + 1) or  # Right
-        (pos1[0] == pos2[0] and pos1[1] == pos2[1] - 1)     # Left
-    )
+TIME_OUT = 1800
 
 def get_memory_usage():
     process = os.popen('wmic process where "ProcessId={}" get WorkingSetSize'.format(os.getpid()))
@@ -63,6 +55,5 @@ def find_boxes_position(grid, stone_weights):
                 boxes[(row, col)] = stone_weights[stone_index]
                 stone_index += 1
     return boxes
-
 
 
