@@ -73,8 +73,7 @@ def animate_movement_with_push(game: Sokoban, path):
     start_x = (canvas.winfo_width() - map_width) // 2
     start_y = (canvas.winfo_height() - map_height) // 2
 
-    goal_positions = set((x, y) for x, y in [(i, j) for i, row in enumerate(grid) for j, val in enumerate(row) if val == '.'])
-
+    goal_positions = set((x, y) for x, y in [(i, j) for i, row in enumerate(grid) for j, val in enumerate(row) if val == '.'or val =='*' or val=='+'])
     def get_next_position(x, y, direction):
         if direction in ('u', 'U'):
             return x - 1, y
@@ -143,7 +142,7 @@ def animate_movement_with_push(game: Sokoban, path):
 
 def start_algorithm():
     load_level(current_level)
-    load_and_run_algorithm()
+    root.after(1000,load_and_run_algorithm())
 
 def load_and_run_algorithm():
     global current_level
