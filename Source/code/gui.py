@@ -143,7 +143,7 @@ def animate_movement_with_push(game: Sokoban, path):
 
 def start_algorithm():
     load_level(current_level)
-    load_and_run_algorithm(1000,load_and_run_algorithm())
+    load_and_run_algorithm()
 
 def load_and_run_algorithm():
     global current_level
