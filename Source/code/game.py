@@ -32,7 +32,7 @@ class Sokoban:
                 return False
         return True
 
-    def is_board_can_not_win(self):
+    def is_least_one_box_in_corner(self):
         '''Return True if at least one box is stuck in a corner of walls, meaning the game can't be won.'''
         for stone_pos in self.stone_map:  # Iterate through each stone position
             x, y = stone_pos
@@ -217,7 +217,7 @@ class Sokoban:
 
     def get_next_actions(self):
 
-        if(self.is_board_can_not_win() or self.is_stuck_all_stones()):
+        if(self.is_least_one_box_in_corner() or self.is_stuck_all_stones()):
             return []
         
         '''Return list of positions that player can move to from current position'''

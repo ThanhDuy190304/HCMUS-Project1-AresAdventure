@@ -1,6 +1,15 @@
 import os
 TIME_OUT = 1800
 
+def is_adjacent(pos1, pos2):
+    '''Check if pos1 is adjacent to pos2 (up, down, left, right).'''
+    return (
+        (pos1[0] == pos2[0] + 1 and pos1[1] == pos2[1]) or  # Below
+        (pos1[0] == pos2[0] - 1 and pos1[1] == pos2[1]) or  # Above
+        (pos1[0] == pos2[0] and pos1[1] == pos2[1] + 1) or  # Right
+        (pos1[0] == pos2[0] and pos1[1] == pos2[1] - 1)     # Left
+    )
+
 def get_memory_usage():
     process = os.popen('wmic process where "ProcessId={}" get WorkingSetSize'.format(os.getpid()))
     memory = process.read().strip().split('\n')

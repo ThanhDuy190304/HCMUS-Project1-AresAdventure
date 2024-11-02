@@ -10,7 +10,7 @@ class Node:
 		
 	def __hash__(self):
 		# Use player's position and the sorted stone positions for a unique hash
-		return hash((self.state.playerPos, tuple(sorted(self.state.stone_map.items()))))
+		return hash((tuple(sorted(self.state.stone_map.items())), self.state.playerPos))
 
 	def __eq__(self, other):
 		if self.state.stone_map != other.state.stone_map:
