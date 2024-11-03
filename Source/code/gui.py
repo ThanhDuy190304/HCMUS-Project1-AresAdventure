@@ -16,7 +16,7 @@ def save_result_to_file(output_file, result, algorithm_name):
     num_checked_states, final_node, total_time, memory_usage = result
     with open(output_file, "w") as f:
         f.write(f"{algorithm_name}\n")
-        f.write(f"Steps: {len(final_node.actions)}, Weight: {final_node.total_weight}, Node: {num_checked_states}, Time (ms): {total_time:.2f}, Memory (MB): {memory_usage:.2f}\n")
+        f.write(f"Steps: {len(final_node.actions)}, Weight: {final_node.total_weight}, Node: {num_checked_states}, Time (ms): {total_time:.2f}, Memory (MB): {memory_usage:.4f}\n")
         f.write(f"{final_node.actions}")
     
 def run_algorithm(game, result_path, algorithm_name,result_window):
@@ -51,7 +51,7 @@ def run_algorithm(game, result_path, algorithm_name,result_window):
             f"Total weight: {final_node.total_weight}\n"
             f"Steps: {len(final_node.actions)}\n"
             f"Time: {total_time*1000:.2f} ms\n"
-            f"Memory: {memory_usage / (1024 ** 2):.2f} MB\n"
+            f"Memory: {memory_usage / (1024 ** 2):.4f} MB\n"
             f"Node generated: {num_checked_states}"
         )
 
