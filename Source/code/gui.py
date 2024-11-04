@@ -54,7 +54,6 @@ def run_algorithm(game, result_path, algorithm_name,result_window):
             f"Memory: {memory_usage / (1024 ** 2):.4f} MB\n"
             f"Node generated: {num_checked_states}"
         )
-
         
         for widget in result_window.winfo_children():
             widget.destroy()

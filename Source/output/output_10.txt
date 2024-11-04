@@ -1,3 +1,3 @@
-Uniform Cost Search
-Steps: 26, Weight: 403, Node: 7089, Time (ms): 0.70, Memory (MB): 299008.0000
+A* Search with heuristic
+Steps: 26, Weight: 403, Node: 5838, Time (ms): 0.75, Memory (MB): 102400.0000
 ['u', 'l', 'l', 'd', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'u', 'u', 'l', 'l', 'l', 'l', 'l', 'L', 'u', 'l', 'D', 'D', 'r', 'd', 'L']
