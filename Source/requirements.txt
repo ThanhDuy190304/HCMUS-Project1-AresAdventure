@@ -1,0 +1,12 @@
+# psutil (Process and System Utilities) là thư viện cung cấp các công cụ để giám sát và quản lý hệ thống. Nó cho phép lấy thông tin về hệ thống và các tiến trình đang chạy, như mức sử dụng CPU, bộ nhớ, đĩa, mạng, cảm biến và nhiều thông tin khác.
+pip install psutil
+
+# Thư viện tkinter là một thư viện GUI (Graphical User Interface) được sử dụng để tạo giao diện người dùng đồ họa trong Python.
+pip install tkinter
+
+# Thư viện copy trong Python cung cấp các công cụ để sao chép dữ liệu từ một đối tượng sang một đối tượng khác.
+# (Ở đây tụi em dùng cho việc tạo mảng mới từ mảng cũ)
+pip install copy
+
+# Thư viện mở rộng cho PIL dùng để xử lý hình ảnh trong Python
+pip install pillow

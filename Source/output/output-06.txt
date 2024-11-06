@@ -1,0 +1,9 @@
+BFS
+Steps: 36, Weight: 752, Node: 432707, Time (ms): 32.46, Memory (MB): 727138304.0000
+dLLLLruLruLulldRldRRluRRldRRRuruLLLL
+UCS
+Steps: 43, Weight: 589, Node: 616436, Time (ms): 63.22, Memory (MB): 1219596288.0000
+ulllulldRRRRdrruulLLLLdldRRdrUruurDrddlLLLL
+A*
+Steps: 43, Weight: 589, Node: 614162, Time (ms): 65.59, Memory (MB): 267399168.0000
+ulllulldRRRRdrruulLLLLdldRRdrUruurDrddlLLLL
