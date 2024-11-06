@@ -12,25 +12,39 @@ current_level = 1
 algorithms = ["Breadth-First Search", "Depth-First Search", "Uniform Cost Search", "A* Search with heuristic"]
 current_algorithm_index = 0
 is_algorithm_running = False
+
 def save_result_to_file(output_file, result, algorithm_name):
+    algorithm_short_name = {
+        "Breadth-First Search": "BFS",
+        "Depth-First Search": "DFS",
+        "Uniform Cost Search": "UCS",
+        "A* Search with heuristic": "A*"
+    }
+    short_name = algorithm_short_name.get(algorithm_name, algorithm_name)
     num_checked_states, final_node, total_time, memory_usage = result
-    with open(output_file, "w") as f:
-        f.write(f"{algorithm_name}\n")
-        f.write(f"Steps: {len(final_node.actions)}, Weight: {final_node.total_weight}, Node: {num_checked_states}, Time (ms): {total_time:.2f}, Memory (MB): {memory_usage:.4f}\n")
-        f.write(f"{final_node.actions}")
+    # Convert actions to a concatenated string
+    actions_str = ''.join(final_node.actions)
+    with open(output_file, "a") as f:
+        f.write(f"{short_name}\n")
+        f.write(f"Steps: {len(final_node.actions)}, Weight: {final_node.total_weight}, Node: {num_checked_states}, Time (ms): {total_time * 1000:.2f}, Memory (MB): {memory_usage / (1024 ** 2):.4f}\n")
+        f.write(f"{actions_str}\n")  # Newline after each algorithm output
+
+
     
+# Run the selected algorithm    
 def run_algorithm(game, result_path, algorithm_name,result_window):
 
     global is_algorithm_running
     is_algorithm_running = True
     run_button.config(state=tk.DISABLED)
 
+     # Check if result window is open or create a new one
     if result_window is None or not result_window.winfo_exists():
-        
         result_window = tk.Toplevel(root)
         result_window.title("RESULT")
         result_window.geometry("400x200+820+300")
         result_window.configure(bg="black")
+    # Select the algorithm to run based on user choice
     if algorithm_name == "Breadth-First Search":
         result = BFS(game)
     elif algorithm_name == "Depth-First Search":
@@ -42,7 +56,7 @@ def run_algorithm(game, result_path, algorithm_name,result_window):
     else:
         messagebox.showerror("Lỗi", f"Thuật toán '{algorithm_name}' không được hỗ trợ.")
         return
-
+    # Display the result if it exists
     if result:
         num_checked_states, final_node, total_time, memory_usage = result
         result_text = (
@@ -54,7 +68,8 @@ def run_algorithm(game, result_path, algorithm_name,result_window):
             f"Memory: {memory_usage / (1024 ** 2):.4f} MB\n"
             f"Node generated: {num_checked_states}"
         )
-        
+
+        # Clear previous result display
         for widget in result_window.winfo_children():
             widget.destroy()
 
@@ -70,8 +85,8 @@ def run_algorithm(game, result_path, algorithm_name,result_window):
         return
     is_algorithm_running = False
     status_label.config(text="Process completed", font="bold", fg="green")
-        
-
+    
+# Animate the movements of the solution
 def animate_movement_with_push(game: Sokoban, path):
     grid, player_pos, stones_map, shortest_path = game.board, game.playerPos, game.stone_map, path
     player_x, player_y = player_pos
@@ -79,12 +94,14 @@ def animate_movement_with_push(game: Sokoban, path):
     grid_size = 40
 
     canvas.update()
-    map_width = len(grid[0]) * grid_size
+    max_row_length = max(len(row) for row in grid) 
+    map_width = max_row_length * grid_size
     map_height = len(grid) * grid_size
     start_x = (canvas.winfo_width() - map_width) // 2
     start_y = (canvas.winfo_height() - map_height) // 2
 
     goal_positions = set((x, y) for x, y in [(i, j) for i, row in enumerate(grid) for j, val in enumerate(row) if val == '.'or val =='*' or val=='+'])
+    # Function to determine the next position based on the direction
     def get_next_position(x, y, direction):
         if direction in ('u', 'U'):
             return x - 1, y
@@ -95,19 +112,23 @@ def animate_movement_with_push(game: Sokoban, path):
         elif direction in ('r', 'R'):
             return x, y + 1
         return x, y
-
+    # Perform each step of the movement animation
     def perform_step():
         global is_algorithm_running
         nonlocal player_x, player_y, step_index, stones_map
         if step_index >= len(shortest_path):
+            # If all steps are completed, stop the animation and enable the run button
             is_algorithm_running = False
             run_button.config(state=tk.NORMAL)
             status_label.config(text="Process completed",font="bold", fg="green")
             return
 
+        # Get the next move in the path
         move = shortest_path[step_index]
         x0, y0 = start_x + player_y * grid_size, start_y + player_x * grid_size
         x1, y1 = x0 + grid_size, y0 + grid_size
+
+        # Check if the player is on a goal position and display the appropriate image
         if (player_x, player_y) in goal_positions:
             canvas.create_image(x0 + grid_size // 2, y0 + grid_size // 2, image=goal_img)
         else:
@@ -115,15 +136,17 @@ def animate_movement_with_push(game: Sokoban, path):
 
         next_player_x, next_player_y = get_next_position(player_x, player_y, move)
 
+        # If the move is uppercase, it means pushing a box
         if move.isupper():
             next_box_x, next_box_y = get_next_position(next_player_x, next_player_y, move)
             current_box_pos = (next_player_x, next_player_y)
 
+            # Check if there is a stone at the current box position
             if current_box_pos in stones_map:
                 stone_weight = stones_map[current_box_pos]
                 del stones_map[current_box_pos]
                 stones_map[(next_box_x, next_box_y)] = stone_weight
-
+                # Display the appropriate image for the current and next box positions
                 if current_box_pos in goal_positions:
                     canvas.create_image((current_box_pos[1] * grid_size) + start_x + grid_size // 2,
                                         (current_box_pos[0] * grid_size) + start_y + grid_size // 2, image=goal_img)
@@ -137,7 +160,7 @@ def animate_movement_with_push(game: Sokoban, path):
                 else:
                     canvas.create_image((next_box_y * grid_size) + start_x + grid_size // 2,
                                         (next_box_x * grid_size) + start_y + grid_size // 2, image=box_img, tags="stone")
-
+                # Display the weight of the stone
                 canvas.create_text(
                     (next_box_y * grid_size) + start_x + grid_size // 2,
                     (next_box_x * grid_size) + start_y + grid_size // 2,
@@ -145,15 +168,16 @@ def animate_movement_with_push(game: Sokoban, path):
                     font=("Arial", 14, "bold"),
                     fill="brown"
                 )
-
+        # Update the player position
         player_x, player_y = next_player_x, next_player_y
         canvas.create_image((player_y * grid_size) + start_x + grid_size // 2,
                             (player_x * grid_size) + start_y + grid_size // 2, image=player_img, tags="player")
-
+        # Move to the next step in the path
         step_index += 1
         root.after(100, perform_step)
 
     perform_step()
+
 
 def start_algorithm():
     global is_algorithm_running
@@ -162,8 +186,9 @@ def start_algorithm():
     if is_algorithm_running:
         status_label.config(text="Process is running",font="bold", fg="red")
         
-    load_level(current_level)
-    root.after(1000, load_and_run_algorithm)
+    load_level(current_level) # Load the current level
+    root.after(1000, load_and_run_algorithm) # Delay and start the algorithm
+
 
 def load_and_run_algorithm():
     global current_level
@@ -172,6 +197,7 @@ def load_and_run_algorithm():
     if not os.path.isfile(input_path):
         messagebox.showerror("Lỗi", f"Tệp đầu vào {input_path} không tồn tại.")
         return
+    # Read game configuration from input file
     grid, stones, stone_weights, switches, player_position = read_maze_file(input_path)
     check_points = find_list_check_point(grid)
     boxes_data = find_boxes_position(grid, stone_weights)
@@ -188,7 +214,8 @@ def load_level(level):
     if not os.path.isfile(input_path):
         messagebox.showerror("Lỗi", f"Tệp đầu vào {input_path} không tồn tại.")
         return
-
+    
+    # Initialize the grid and stones map
     grid = []
     stones_map = {}
 
@@ -198,7 +225,7 @@ def load_level(level):
 
         stone_index = 0
         for i, line in enumerate(fi):
-            row = list(line.strip())
+            row = list(line.rstrip('\n'))
             for j, char in enumerate(row):
                 if char == '$' or char =='*':
                     stones_map[(i, j)] = stone_weights[stone_index]
@@ -211,21 +238,24 @@ def load_level(level):
     display_map(current_grid, current_stones_map)
 
 def display_map(grid, stones_map):
+    
     grid_size = 40
-    map_width = len(grid[0]) * grid_size
+    
+    max_row_length = max(len(row) for row in grid) 
+    map_width = max_row_length * grid_size
     map_height = len(grid) * grid_size
-
-    canvas.config(width=max(600, map_width), height=max(500, map_height))
+    canvas.config(width=max(600, map_width), height=max(500, map_height), bg="white")
     canvas.update()
 
     start_x = (canvas.winfo_width() - map_width) // 2
     start_y = (canvas.winfo_height() - map_height) // 2
 
-    goal_positions = set((i, j) for i, row in enumerate(grid) for j, val in enumerate(row) if val in ['.', '*', '+'])
-
     for i, row in enumerate(grid):
-        for j, char in enumerate(row):
-            x_center = start_x + j * grid_size + grid_size // 2
+        first_wall_index = next((j for j, char in enumerate(row) if char == '#'), None)
+        if first_wall_index is None:
+            continue
+        for j, char in enumerate(row[first_wall_index:], start=first_wall_index):
+            x_center = start_x + (j) * grid_size + grid_size // 2
             y_center = start_y + i * grid_size + grid_size // 2
 
             if char == '#':
@@ -241,8 +271,11 @@ def display_map(grid, stones_map):
             else:
                 canvas.create_image(x_center, y_center, image=ground_img)
 
+    goal_positions = set((i, j) for i, row in enumerate(grid) for j, val in enumerate(row) if val in ['.', '*', '+'])
     for (stone_x, stone_y), weight in stones_map.items():
-        x_center = start_x + stone_y * grid_size + grid_size // 2
+        row = grid[stone_x]
+        first_wall_index = next((j for j, char in enumerate(row) if char == '#'), 0)
+        x_center = start_x + first_wall_index * grid_size + (stone_y - first_wall_index) * grid_size + grid_size // 2
         y_center = start_y + stone_x * grid_size + grid_size // 2
 
         if (stone_x, stone_y) in goal_positions:
@@ -269,11 +302,13 @@ def change_level(direction):
     load_level(current_level)
     status_label.config(text="")
 
+# Switch algorithms when the spacebar is pressed
 def switch_algorithm(event):
     global current_algorithm_index
     current_algorithm_index = (current_algorithm_index + 1) % len(algorithms)
     algorithm_label.config(text=algorithms[current_algorithm_index])
 
+# Initialize the main map and UI components
 def map_init():
     global root, current_level, algorithms, current_algorithm_index, canvas, result_window
     current_level = 1
@@ -288,6 +323,7 @@ def map_init():
     global result_window
     result_window = None
 
+    # Create a separate window for results
     result_window = tk.Toplevel(root)
     result_window.title("RESULT")
     result_window.geometry("400x200+820+300")
@@ -324,6 +360,7 @@ def map_init():
     subtitle_label = tk.Label(root, text="Now, select your map!!!", font=subtitle_font, fg="white", bg="black")
     subtitle_label.pack(pady=5)
 
+    # Navigation for levels
     level_frame = tk.Frame(root, bg="black")
     level_frame.pack(pady=10)
     prev_button = tk.Button(level_frame, text="<", font=subtitle_font, command=lambda: change_level("Left"))
@@ -334,6 +371,7 @@ def map_init():
     next_button = tk.Button(level_frame, text=">", font=subtitle_font, command=lambda: change_level("Right"))
     next_button.grid(row=0, column=2)
 
+    # Frame for algorithm selection
     algorithm_frame = tk.LabelFrame(root, text="Press Space to Select Algorithm", font=("Helvetica", 14, "bold"), fg="white", bg="black", bd=4, labelanchor="n")
     algorithm_frame.pack(pady=10)
 

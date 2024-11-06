@@ -1,3 +1,12 @@
-Uniform Cost Search
-Steps: 35, Weight: 60, Node: 503, Time (ms): 0.06, Memory (MB): 32768.0000
-['d', 'r', 'r', 'd', 'r', 'r', 'u', 'L', 'd', 'd', 'l', 'l', 'l', 'u', 'u', 'u', 'r', 'r', 'u', 'r', 'D', 'D', 'r', 'd', 'd', 'l', 'l', 'u', 'U', 'd', 'u', 'r', 'r', 'd', 'L']
+BFS
+Steps: 45, Weight: 170, Node: 2126, Time (ms): 0.09, Memory (MB): 4096.0000
+drrdrruLLulldRurDuurDDrddlUdlUUdrruLuLDudlluR
+DFS
+Steps: 127, Weight: 190, Node: 3084, Time (ms): 0.13, Memory (MB): 2887680.0000
+rrddrruLrddlllluurururDllldddrruUdrruLrddlllluuruRlldddrrrruulLrluurDllldRlddrruUdrruLuLrdrddlllluurRurDrddlllluurluRldddrrrruL
+UCS
+Steps: 35, Weight: 60, Node: 503, Time (ms): 0.03, Memory (MB): 36864.0000
+drrdrruLddllluuurrurDDrddlluUdurrdL
+A*
+Steps: 35, Weight: 60, Node: 462, Time (ms): 0.02, Memory (MB): 36864.0000
+drrdrruLddllluuurrurDDrddlluUdurrdL

@@ -2,7 +2,6 @@ import os
 import psutil
 TIME_OUT = 1800
 
-
 # inner psutil function
 def process_memory():
     process = psutil.Process(os.getpid())
@@ -22,17 +21,17 @@ def read_maze_file(file_path):
             grid_row = list(line.strip())
             grid.append(grid_row)
             for col, char in enumerate(grid_row):
-                if char == '$':  # Viên đá không trên công tắc
+                if char == '$':
                     stones.append((row, col))
-                elif char == '.':  # Công tắc không có đá
+                elif char == '.':
                     switches.append((row, col))
-                elif char == '*':  # Viên đá trên công tắc
+                elif char == '*':
                     stones.append((row, col))
                     switches.append((row, col))
-                elif char == '+':  # Ares trên công tắc
+                elif char == '+':
                     player_position = (row, col)
                     switches.append((row, col))
-                elif char == '@':  # Ares không trên công tắc
+                elif char == '@':
                     player_position = (row, col)
                     
     return grid, stones, stone_weights, switches, player_position

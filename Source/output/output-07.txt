@@ -1,3 +1,12 @@
-Breadth-First Search
-Steps: 78, Weight: 549, Node: 4401, Time (ms): 0.36, Memory (MB): 421888.0000
-['l', 'D', 'u', 'r', 'r', 'd', 'd', 'd', 'd', 'r', 'r', 'u', 'u', 'L', 'r', 'd', 'd', 'l', 'l', 'l', 'd', 'l', 'l', 'u', 'u', 'u', 'R', 'u', 'u', 'r', 'r', 'd', 'D', 'D', 'u', 'u', 'u', 'l', 'l', 'd', 'd', 'R', 'l', 'l', 'd', 'd', 'd', 'r', 'r', 'u', 'U', 'd', 'd', 'l', 'l', 'u', 'u', 'u', 'r', 'u', 'u', 'r', 'r', 'd', 'D', 'r', 'r', 'd', 'd', 'l', 'L', 'r', 'r', 'u', 'u', 'l', 'l', 'D']
+BFS
+Steps: 78, Weight: 549, Node: 4401, Time (ms): 0.18, Memory (MB): 1187840.0000
+lDurrddddrruuLrddllldlluuuRuurrdDDuuullddRlldddrruUddlluuuruurrdDrrddlLrruullD
+DFS
+Steps: 176, Weight: 755, Node: 15067, Time (ms): 0.64, Memory (MB): 16781312.0000
+lDurrddddrruuLrddllldlluuuRldddrruruUrrddllldlluuuruurrDDDuuullddldddrruRldlluuurRlldddrruruUrrddLruullllldddrruRldlluuuruurrDDrrddLruullllldddrruRlUddlluuuruurrddrrddLLrruullD
+UCS
+Steps: 78, Weight: 549, Node: 2962, Time (ms): 0.12, Memory (MB): -4677632.0000
+lDurrddddrruuLrddllldlluuuRuurrdDDuuullddRlldddrruUddlluuuruurrdDrrddlLrruullD
+A*
+Steps: 78, Weight: 549, Node: 2843, Time (ms): 0.12, Memory (MB): 131072.0000
+lDurrddddrruuLrddllldlluuuRuurrdDDuuullddRlldddrruUddlluuuruurrdDrrddlLrruullD

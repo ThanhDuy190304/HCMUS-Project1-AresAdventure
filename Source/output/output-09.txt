@@ -1,3 +1,12 @@
-Breadth-First Search
-Steps: 34, Weight: 186, Node: 546, Time (ms): 0.05, Memory (MB): 16384.0000
-['R', 'l', 'd', 'd', 'R', 'l', 'u', 'u', 'r', 'D', 'l', 'd', 'd', 'r', 'r', 'r', 'u', 'u', 'u', 'L', 'r', 'd', 'd', 'd', 'l', 'l', 'l', 'u', 'u', 'r', 'D', 'R', 'd', 'L']
+BFS
+Steps: 34, Weight: 186, Node: 546, Time (ms): 0.03, Memory (MB): 0.0000
+RlddRluurDlddrrruuuLrdddllluurDRdL
+DFS
+Steps: 34, Weight: 186, Node: 3372, Time (ms): 0.15, Memory (MB): 266240.0000
+ddRluuRDlddrrruuuLrdddllluurDRlrdL
+UCS
+Steps: 34, Weight: 186, Node: 461, Time (ms): 0.02, Memory (MB): 28672.0000
+RlddRluurDlddrrruuuLrdddllluurDRdL
+A*
+Steps: 34, Weight: 186, Node: 416, Time (ms): 0.02, Memory (MB): 0.0000
+RlddRluurDlddrrruuuLrdddllluurDRdL
