@@ -1,0 +1,3 @@
+Uniform Cost Search
+Steps: 35, Weight: 60, Node: 503, Time (ms): 0.06, Memory (MB): 32768.0000
+['d', 'r', 'r', 'd', 'r', 'r', 'u', 'L', 'd', 'd', 'l', 'l', 'l', 'u', 'u', 'u', 'r', 'r', 'u', 'r', 'D', 'D', 'r', 'd', 'd', 'l', 'l', 'u', 'U', 'd', 'u', 'r', 'r', 'd', 'L']

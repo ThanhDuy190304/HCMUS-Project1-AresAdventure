@@ -167,8 +167,8 @@ def start_algorithm():
 
 def load_and_run_algorithm():
     global current_level
-    input_path = f"./input/input_{str(current_level).zfill(2)}.txt"
-    output_path = f"./output/output_{str(current_level).zfill(2)}.txt"
+    input_path = f"./input/input-{str(current_level).zfill(2)}.txt"
+    output_path = f"./output/output-{str(current_level).zfill(2)}.txt"
     if not os.path.isfile(input_path):
         messagebox.showerror("Lỗi", f"Tệp đầu vào {input_path} không tồn tại.")
         return
@@ -183,7 +183,7 @@ def load_and_run_algorithm():
 def load_level(level):
     global current_level, current_grid, current_stones_map,background_img_id
     current_level = level
-    input_path = f"./input/input_{str(level).zfill(2)}.txt"
+    input_path = f"./input/input-{str(level).zfill(2)}.txt"
 
     if not os.path.isfile(input_path):
         messagebox.showerror("Lỗi", f"Tệp đầu vào {input_path} không tồn tại.")

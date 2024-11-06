@@ -1,3 +1,3 @@
-A* Search with heuristic
-Steps: 78, Weight: 549, Node: 2843, Time (ms): 0.29, Memory (MB): 606208.0000
+Breadth-First Search
+Steps: 78, Weight: 549, Node: 4401, Time (ms): 0.36, Memory (MB): 421888.0000
 ['l', 'D', 'u', 'r', 'r', 'd', 'd', 'd', 'd', 'r', 'r', 'u', 'u', 'L', 'r', 'd', 'd', 'l', 'l', 'l', 'd', 'l', 'l', 'u', 'u', 'u', 'R', 'u', 'u', 'r', 'r', 'd', 'D', 'D', 'u', 'u', 'u', 'l', 'l', 'd', 'd', 'R', 'l', 'l', 'd', 'd', 'd', 'r', 'r', 'u', 'U', 'd', 'd', 'l', 'l', 'u', 'u', 'u', 'r', 'u', 'u', 'r', 'r', 'd', 'D', 'r', 'r', 'd', 'd', 'l', 'L', 'r', 'r', 'u', 'u', 'l', 'l', 'D']
